@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Bayes Feed",
+    "slug": "bayes_feed",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.nomomon.bayes_feed",
+      "buildNumber": "1.0.0",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.nomomon.bayes_feed",
+      "versionCode": 1,
+      "addaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c3dcce3b-0f06-4419-b5d0-19364f23bb9b"
+      }
+    }
+  }
+}
