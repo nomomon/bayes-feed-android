@@ -3,16 +3,18 @@ import parser from 'react-native-rss-parser';
 
 const cleanDescription = (description: string) => {
     // Remove HTML tags from postDescription
-    description = description.replace(/<[^>]*>?/gm, '');
+    description = description.replace(/<[^>]*>?/gm, ' ');
     description = description.replace(/&[^;]*;?/gm, ' ');
 
     // Remove Читать далее from postDescription
-    description = description.replace(/Читать далее*/, '');
+    description = description.replace(/Читать далее*/, ' ');
 
     // Remove everything after [link] [comments] from postDescription
-    description = description.replace(/\[link\].*/, '');
-    description = description.replace(/\[comments\].*/, '');
+    description = description.replace(/\[link\].*/, ' ');
+    description = description.replace(/\[comments\].*/, ' ');
 
+    // Remove all spaces from postDescription
+    description = description.replace(/\s+/g, ' ');
     description = description.trim();
 
     return description;

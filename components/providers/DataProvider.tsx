@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { createContext, FC, ReactNode, useEffect, useState } from "react";
-import { auth, getUserFreq, getUserWords, patchUserFreq, patchUserWords } from "../firebase";
+import { auth, getUserRss, getUserFreq, getUserWords, patchUserFreq, patchUserWords } from "../firebase";
 import { Freq } from "../interface/Freq";
 import { RawPost } from "../interface/RawPost";
 import { Score } from "../interface/Score";
@@ -22,6 +22,9 @@ export type DataProviderInterface = {
     words: Words;
     freq: Freq;
     loading: boolean;
+    rss: string[];
+    refreshing: boolean;
+    setRefreshing: (refreshing: boolean) => void;
     reactToPost: (wordFreq: WordFreq, score: Score) => Promise<void>;
 };
 
@@ -32,13 +35,8 @@ export const DataProviderCls: FC<DataProviderProps> = ({
     const [freq, setFreq] = useState<Freq>({ like: 0, dislike: 0 })
     const [posts, setPosts] = useState<RawPost[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-
-    // load the data
-    const rss: string[] = [
-        'https://habr.com/ru/rss/all/all/?fl=ru',
-        'https://habr.com/ru/rss/feed/posts/all/089201e53df20f692f1c6dd842ecc29a/?fl=ru',
-        'https://dev.to/feed/'
-    ];
+    const [refreshing, setRefreshing] = useState<boolean>(false);
+    const [rss, setRss] = useState<string[]>([]);
 
 
     useEffect(() => {
@@ -48,21 +46,31 @@ export const DataProviderCls: FC<DataProviderProps> = ({
         getUserFreq().then(freq => {
             setFreq(freq)
         })
+        getUserRss().then(rss => {
+            setRss(rss)
+        })
     }, [])
 
     useEffect(() => {
-        if (loading) {
+        if (loading && rss.length > 0) {
             // rss.forEach(r =>
             getFeed(rss)
-                .then(p => {
-                    setPosts(() => p);
+                .then(newPosts => {
+                    setPosts((oldPosts) => {
+                        const allPosts = [...oldPosts, ...newPosts];
+                        const uniquePosts = allPosts.filter((post, index, self) => {
+                            return self.findIndex(p => p.link == post.link) == index;
+                        })
+
+                        return uniquePosts;
+                    });
                 })
                 .then(() => {
                     setLoading(false);
                 })
             // )
         }
-    }, [words, freq, loading])
+    }, [words, freq, loading, rss])
 
 
     useEffect(() => {
@@ -107,7 +115,10 @@ export const DataProviderCls: FC<DataProviderProps> = ({
                 loading,
                 words,
                 freq,
+                rss,
                 loading,
+                refreshing,
+                setRefreshing,
                 reactToPost
             }}
         >

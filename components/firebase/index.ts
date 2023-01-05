@@ -21,6 +21,17 @@ export const provider = new GoogleAuthProvider();
 //     }
 // }
 
+export async function getUserRss(): Promise<string[]> {
+    // if (auth.currentUser === null) {
+    //     return { like: {}, dislike: {} };
+    // }
+    const feedsRef = doc(db, `/users/${UID}/feeds/feeds`);
+    const feedsSnap = await getDoc(feedsRef);
+    const feeds = feedsSnap.data().feeds as string[];
+
+    return feeds || [];
+}
+
 export async function getUserWords(): Promise<Words> {
     // if (auth.currentUser === null) {
     //     return { like: {}, dislike: {} };
