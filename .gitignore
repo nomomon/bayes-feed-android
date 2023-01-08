@@ -11,6 +11,9 @@ web-build/
 .env.*
 !.env.example
 
+# Firebase (copy firebaseConfig.example.js to firebaseConfig.js and add your keys)
+firebaseConfig.js
+
 # Build / native
 android/build/
 android/app/build/

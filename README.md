@@ -23,6 +23,15 @@ Same idea as the web version: aggregate posts from RSS feeds, run text through a
 
 ## How to run
 
+Copy the Firebase config and add your keys (same project as the web app, or your own):
+
+```bash
+cp firebaseConfig.example.js firebaseConfig.js
+# Edit firebaseConfig.js with your Firebase project credentials
+```
+
+Then:
+
 ```bash
 npm install
 npx expo start
