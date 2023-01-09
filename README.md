@@ -1,7 +1,5 @@
 # Bayes Feed (Android)
 
-![Feed overview](assets/feed-overview.jpg)
-
 RSS feed with a Naïve Bayes classifier that learns from your reactions. You like or dislike posts; the algorithm predicts what you'll enjoy and gets better over time.
 
 **This repo is the Android app.** The **web app** (which I built first) is **[bayes-feed-web](https://github.com/nomomon/bayes-feed-web)**.
@@ -11,8 +9,6 @@ RSS feed with a Naïve Bayes classifier that learns from your reactions. You lik
 ## What it does
 
 Same idea as the web version: aggregate posts from RSS feeds, run text through a Naïve Bayes model to predict "like" vs "dislike," and let you react with thumbs up/down. Your reactions sync to Firestore so the model improves as you use it.
-
-![Single post card](assets/post-example.jpg)
 
 ## Tech
 
@@ -53,5 +49,10 @@ I built the **web app** first ([bayes-feed-web](https://github.com/nomomon/bayes
 Migration was straightforward: I copied the Naïve Bayes logic and Firebase usage from the web app. The UI had to be redone—React Native doesn't have a single component library that looks the same on iOS and Android, so I used NativeWind and adapted Tailwind-style components for native. Building the APK was a single command. Learned a lot about shipping a real mobile app.
 
 ---
+
+<p align="center">
+  <img src="assets/feed-overview.jpg" width="320" alt="Feed overview">
+  <img src="assets/post-example.jpg" width="320" alt="Post card">
+</p>
 
 *MIT*
